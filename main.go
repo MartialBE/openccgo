@@ -3,7 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/MartialBE/opencc_jieba_conversion/utils"
+	"github.com/MartialBE/openccgo/utils"
+	"github.com/go-ego/gse"
 	"github.com/liuzl/gocc"
 	"log"
 	"os"
@@ -13,6 +14,7 @@ import (
 var inputFile = flag.String("i", "", "input file path")
 var outputFile = flag.String("o", "", "output file path")
 var mode = flag.String("m", "s2hk", "mode ")
+var Seg gse.Segmenter
 
 func init() {
 	*gocc.Dir = "./resource"
@@ -25,21 +27,22 @@ func init() {
 		os.RemoveAll(filepath.Join("./", "resource"))
 	}
 	flag.Parse()
+	Seg.LoadDict("./resource/gse/dictionary.txt")
 }
 
 func main() {
 	if *outputFile == ""{
-		*outputFile = "out_" + *inputFile
+		*outputFile = "out1_" + *inputFile
 	}
 	file, err := utils.LoadFile(*inputFile, *outputFile)
 	if err != nil {
 		log.Fatal(err)
 	}
-	jieba := utils.Jieba(file.Content)
+	strArr := Seg.Cut(file.Content, true)
 	newStr := ""
 	cc, err := gocc.New(*mode)
-	for i := 0; i < len(jieba); i++ {
-		language, err := cc.Convert(jieba[i])
+	for i := 0; i < len(strArr); i++ {
+		language, err := cc.Convert(strArr[i])
 		if err != nil {
 			log.Fatal(err)
 		}
