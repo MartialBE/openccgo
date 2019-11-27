@@ -3,17 +3,20 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/MartialBE/openccgo/utils"
-	"github.com/go-ego/gse"
-	"github.com/liuzl/gocc"
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/MartialBE/openccgo/utils"
+	"github.com/go-ego/gse"
+	"github.com/liuzl/gocc"
 )
 
 var inputFile = flag.String("i", "", "input file path")
 var outputFile = flag.String("o", "", "output file path")
 var mode = flag.String("m", "s2hk", "mode ")
+
+// gse init
 var Seg gse.Segmenter
 
 func init() {
@@ -31,16 +34,21 @@ func init() {
 }
 
 func main() {
-	if *outputFile == ""{
+	if *outputFile == "" {
 		*outputFile = "out1_" + *inputFile
 	}
 	file, err := utils.LoadFile(*inputFile, *outputFile)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	strArr := Seg.Cut(file.Content, true)
 	newStr := ""
 	cc, err := gocc.New(*mode)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	for i := 0; i < len(strArr); i++ {
 		language, err := cc.Convert(strArr[i])
 		if err != nil {

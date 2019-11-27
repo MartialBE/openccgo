@@ -7,13 +7,15 @@ import (
 	"os"
 )
 
+// 存储文件信息
 type File struct {
 	ReadpPath string
 	WritePath string
-	Content string
+	Content   string
 }
 
-func LoadFile(readFile, writePath string) ( file *File, err error)  {
+// 加载文件 并 初始化 文件
+func LoadFile(readFile, writePath string) (file *File, err error) {
 	//获取文件信息
 	fi, err := os.Stat(readFile)
 	if err != nil {
@@ -32,11 +34,12 @@ func LoadFile(readFile, writePath string) ( file *File, err error)  {
 	file = &File{
 		ReadpPath: readFile,
 		WritePath: writePath,
-		Content: string(b),
+		Content:   string(b),
 	}
 	return
 }
 
+// 写入文件
 func (file *File) WriteFile() (err error) {
 	f, err := os.OpenFile(file.WritePath, os.O_RDWR|os.O_CREATE, 0600)
 	defer f.Close()

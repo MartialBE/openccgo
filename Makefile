@@ -1,4 +1,4 @@
-NAME=opencc_jieba
+NAME=openccgo
 DISTDIR=dist
 VERSION=$(shell git describe --tags || echo "unknown version")
 GOBUILD=CGO_ENABLED=0 go build -o $(DISTDIR)/$(NAME)
