@@ -15,25 +15,28 @@ import (
 var inputFile = flag.String("i", "", "input file path")
 var outputFile = flag.String("o", "", "output file path")
 var mode = flag.String("m", "s2hk", "mode ")
+var dir, _ = filepath.Abs(filepath.Dir(os.Args[0]))
 
 // gse init
 var Seg gse.Segmenter
 
 func init() {
-	*gocc.Dir = "./resource"
+	*gocc.Dir = dir + "/resource"
 	flag.CommandLine.Usage = func() {
 		fmt.Println("-i input file path")
 		fmt.Println("-o output file path")
 		fmt.Println("-m mode:s2t,t2s,s2tw,tw2s,s2hk,hk2s,s2twp,tw2sp,t2tw,t2hk")
 	}
-	if err := RestoreAssets("./", "resource"); err != nil {
-		os.RemoveAll(filepath.Join("./", "resource"))
+	if err := RestoreAssets(dir+"/", "resource"); err != nil {
+		os.RemoveAll(filepath.Join(dir+"/", "resource"))
 	}
 	flag.Parse()
-	Seg.LoadDict("./resource/gse/dictionary.txt")
+	Seg.LoadDict(dir + "/resource/gse/dictionary.txt")
 }
 
 func main() {
+
+	log.Print(dir)
 	if *outputFile == "" {
 		*outputFile = "out1_" + *inputFile
 	}
