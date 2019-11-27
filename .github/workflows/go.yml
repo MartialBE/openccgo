@@ -27,6 +27,8 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          files: dist/*
-          draft: true
-          prerelease: true
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        files: dist/*
+        draft: true
+        prerelease: true
