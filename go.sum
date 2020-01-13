@@ -11,3 +11,5 @@ github.com/liuzl/gocc v0.0.0-20190220024325-82aea3cc63c3/go.mod h1:WOmJMC+oEvNwr
 github.com/vcaesar/tt v0.0.0-20191103173835-6896a351024b/go.mod h1:GHPxQYhn+7OgKakRusH7KJ0M5MhywoeLb8Fcffs/Gtg=
 github.com/yanyiwu/gojieba v1.1.0 h1:rx+kNP0L7zn+4Zyo1d8aLCfXt3BmIkWQ26FCbGnw1bc=
 github.com/yanyiwu/gojieba v1.1.0/go.mod h1:0AAj9tOG6WWXQ5FNffl4ruBy/hP7bHl2gs+YiDi1aYs=
+github.com/yanyiwu/gojieba v1.1.1 h1:sOQfoYuURTpqwspL9oasDgR69WFNb6A6eq4l/bnrBuw=
+github.com/yanyiwu/gojieba v1.1.1/go.mod h1:54wkP7sMJ6bklf7yPl6F+JG71dzVUU1WigZbR47nGdY=
