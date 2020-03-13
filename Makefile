@@ -10,7 +10,7 @@ PLATFORM_LIST = \
 WINDOWS_ARCH_LIST = \
 	windows-amd64
 
-all: linux-amd64 darwin-amd64 windows-amd64
+# all: config.go linux-amd64 darwin-amd64 windows-amd64
 
 darwin-amd64:
 	GOARCH=amd64 GOOS=darwin $(GOBUILD)-$@ .
@@ -21,6 +21,7 @@ linux-amd64:
 windows-amd64:
 	GOARCH=amd64 GOOS=windows $(GOBUILD)-$@.exe .
 
+goBindata=$(shell go-bindata -o=config.go -pkg=main resource/...)
 gz_releases=$(addsuffix .gz, $(PLATFORM_LIST))
 zip_releases=$(addsuffix .zip, $(WINDOWS_ARCH_LIST))
 
@@ -31,7 +32,7 @@ $(gz_releases): %.gz : %
 $(zip_releases): %.zip : %
 	zip -m -j $(DISTDIR)/$(NAME)-$(basename $@)-$(VERSION).zip $(DISTDIR)/$(NAME)-$(basename $@).exe
 
-releases: $(gz_releases) $(zip_releases)
+releases: $(goBindata) $(gz_releases) $(zip_releases)
 
 clean:
 	rm -r $(DISTDIR)/*

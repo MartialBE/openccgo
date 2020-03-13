@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path"
 )
 
 // 存储文件信息
@@ -41,6 +42,7 @@ func LoadFile(readFile, writePath string) (file *File, err error) {
 
 // 写入文件
 func (file *File) WriteFile() (err error) {
+	os.MkdirAll(path.Dir(file.WritePath), os.ModePerm)
 	f, err := os.OpenFile(file.WritePath, os.O_RDWR|os.O_CREATE, 0600)
 	defer f.Close()
 	if err != nil {
@@ -53,4 +55,13 @@ func (file *File) WriteFile() (err error) {
 	}
 	writer.Flush()
 	return nil
+}
+
+// 判断所给路径是否为文件夹
+func IsDir(path string) bool {
+	s, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+	return s.IsDir()
 }

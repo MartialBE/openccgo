@@ -27,8 +27,10 @@ func init() {
 		fmt.Println("-o output file path")
 		fmt.Println("-m mode:s2t,t2s,s2tw,tw2s,s2hk,hk2s,s2twp,tw2sp,t2tw,t2hk")
 	}
-	if err := RestoreAssets(dir+"/", "resource"); err != nil {
-		os.RemoveAll(filepath.Join(dir+"/", "resource"))
+	if !utils.IsDir(*gocc.Dir) {
+		if err := RestoreAssets(dir+"/", "resource"); err != nil {
+			os.RemoveAll(filepath.Join(dir+"/", "resource"))
+		}
 	}
 	flag.Parse()
 	Seg.LoadDict(dir + "/resource/gse/dictionary.txt")
